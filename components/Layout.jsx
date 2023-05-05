@@ -28,7 +28,7 @@ const Layout = ({ title, children }) => {
   return (
     <>
       <Head>
-        <title> {title ? title + ' - shopping' : 'shopping'}</title>
+        <title> {title ? title + ' - mall' : 'mall'}</title>
       </Head>
       <div className="w-full flex min-h-screen flex-col justify-between ">
         <header>
