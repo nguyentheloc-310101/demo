@@ -1,34 +1,27 @@
 import Head from 'next/head';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import Footer from './Footer';
 import { Store } from '@/ultis/Store';
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
   IconButton,
 } from '@material-tailwind/react';
 import Link from 'next/link';
+import Collapse from '@material-tailwind/react/components/Collapse';
 
 const Layout = ({ title, children }) => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   /* The List Item of navigation bar*/
-  const [openNav, setOpenNav] = React.useState(false);
-
-  React.useEffect(() => {
-    window.addEventListener(
-      'resize',
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
+  const [openNav, setOpenNav] = useState(false);
 
   return (
     <>
       <Head>
-        <title> {title ? title + ' - mall' : 'mall'}</title>
+        <title> {title ? title + ' - shopping' : 'shopping'}</title>
       </Head>
       <div className="w-full flex min-h-screen flex-col justify-between ">
         <header>
@@ -38,7 +31,7 @@ const Layout = ({ title, children }) => {
                 <Link href="/">Shopping</Link>
               </Typography>
               <div className="flex items-center gap-4">
-                <div className="mr-4 hidden lg:block">
+                <div className="mr-4  lg:block">
                   <Typography
                     as="li"
                     variant="small"
@@ -100,23 +93,7 @@ const Layout = ({ title, children }) => {
                 </IconButton>
               </div>
             </div>
-            <MobileNav open={openNav}>
-              <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal">
-                <Link
-                  href="/cart"
-                  className="flex items-center">
-                  Cart
-                  {cart.cartItems.length > 0 && (
-                    <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                    </span>
-                  )}
-                </Link>
-              </Typography>
+            <Collapse open={openNav}>
               <Button
                 variant="gradient"
                 size="sm"
@@ -124,7 +101,7 @@ const Layout = ({ title, children }) => {
                 className="mb-2">
                 <span>Log In</span>
               </Button>
-            </MobileNav>
+            </Collapse>
           </Navbar>
         </header>
         <main>{children}</main>
